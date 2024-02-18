@@ -5,7 +5,7 @@ import {IFlight} from "../../types/types";
 
 class SocketIoStore {
     io = io();
-    @observable messages: IFlight[] = [];
+    @observable flights: IFlight[] = [];
     @observable isConnected: boolean = false;
 
     constructor() {
@@ -17,17 +17,21 @@ class SocketIoStore {
             transports: ["websocket"],
         });
         this.io.on("flight-update", (data) => {
-            this.handleMessage(data);
+            this.addFlight(data);
         });
         this.io.on("connected", () => {
             this.isConnected = true;
         });
 
     }
-
     @action
-    handleMessage(message: IFlight) {
-        this.messages.push(message);
+    addFlight(flight: IFlight) {
+        const flightIndex = this.flights.findIndex(flightData => flightData.flightNumber === flight.flightNumber);
+        if (flightIndex !== -1) {
+            Object.assign(this.flights[flightIndex], flight);
+        } else {
+            this.flights.push(flight);
+        }
     }
 
     disconnect() {
@@ -37,6 +41,4 @@ class SocketIoStore {
 }
 
 const websocketStore = new SocketIoStore();
-export default websocketStore;
-
 export const SocketStoreContext = createContext(websocketStore);
