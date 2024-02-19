@@ -3,7 +3,7 @@ import {observer} from 'mobx-react';
 import {IFlight} from "../../../types/types";
 import {SocketStoreContext} from "../../stores/socketStore";
 import './filghtStyle.scss';
-const Index: React.FC<IFlight> = (({
+const Flight: React.FC<IFlight> = (({
                                         flightNumber,
                                         status,
                                         takeoffTime,
@@ -23,4 +23,4 @@ const Index: React.FC<IFlight> = (({
     );
 });
 
-export default observer(Index);
+export default observer(Flight);

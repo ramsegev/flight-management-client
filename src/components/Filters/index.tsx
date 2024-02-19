@@ -9,10 +9,12 @@ const Filters: React.FC = (() => {
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         socketStore.setSearchQuery && socketStore.setSearchQuery(event.target.value)
     }
+    console.log('filter')
     return (
         <div>
             <input
                 type="text"
+                name="searchQuery"
                 placeholder="Search..."
                 value={searchQuery && searchQuery}
                 onChange={handleChange}

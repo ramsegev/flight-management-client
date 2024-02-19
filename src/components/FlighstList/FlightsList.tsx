@@ -5,10 +5,11 @@ import Flight from "../../components/Flight";
 import {IFlight} from "../../../types/types";
 
 
-const Index: React.FC = (() => {
+const FlightsList: React.FC = (() => {
     const socketStore = useContext(SocketStoreContext);
     const {filteredFlights} = socketStore;
     useEffect(() => {
+        console.log(socketStore.isConnected)
         !socketStore.isConnected && socketStore.connect();
     }, [socketStore]);
     const handleCloseConnection = () => {
@@ -35,4 +36,4 @@ const Index: React.FC = (() => {
     );
 });
 
-export default observer(Index);
+export default observer(FlightsList);

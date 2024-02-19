@@ -8,6 +8,7 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+    // removed strict mode because MobX causes observed components to render twice
     <App />
 );
 

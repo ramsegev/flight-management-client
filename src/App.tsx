@@ -1,13 +1,10 @@
 import React from 'react';
-
-import Flights from "./pages/Flights";
-import Filters from "./components/Filters";
+import FlightsMonitor from "./pages/FlightsMonitor";
 
 function App() {
     return (
         <div className="App">
-            <Filters />
-            <Flights />
+            <FlightsMonitor />
         </div>
     );
 }
