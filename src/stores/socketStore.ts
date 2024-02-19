@@ -12,7 +12,6 @@ class SocketIoStore {
         statusClass: "",
         takeoffTimeClass: "",
         landingTimeClass: "",
-        takeoffAirportClass: "",
         landingAirportClass: "",
     };
     @observable isConnected: boolean = false;
@@ -31,7 +30,6 @@ class SocketIoStore {
     disconnect() {
         this.ws.disconnect();
         this.isConnected = false;
-        console.log("Connection closed");
     }
     @action
     setSearchQuery(query: string = "") {
@@ -40,24 +38,34 @@ class SocketIoStore {
     @computed
     get filteredFlights() {
         const query = this.searchQuery.toLowerCase();
-        return this.flights.filter(flight =>
-            flight.flightNumber.toLowerCase().includes(query) ||
-            flight.takeoffAirport.toLowerCase().includes(query) ||
-            flight.landingAirport.toLowerCase().includes(query)
+        return this.flights.filter(flight => {
+                return flight.flightNumber.toLowerCase().includes(query) ||
+                flight.takeoffAirport.toLowerCase().includes(query) ||
+                flight.landingAirport.toLowerCase().includes(query)
+            }
         );
+
     }
-    setConnected = () => {
+    setConnected(){
         this.isConnected = true;
-    };
+    }
     addFlight(flight: IFlight) {
+        const delayHours = this.timeDifferenceInMinutes(flight.takeoffTime, flight.landingTime);
+        const flightClass = flight.status === 'malfunction' ? 'malfunction' :
+            delayHours >= 120 ? 'longDelay' : '';
+        const updatedFlight = {...flight};
+        updatedFlight.flightClass = flightClass;
+        console.log('delayHours', delayHours)
+        updatedFlight.delayHours = isNaN(delayHours) || delayHours <= 0 ? 'On Time' : `${Math.floor(delayHours/60) }\\h`
         const flightIndex = this.flights.findIndex(
-            (flightData) => flightData.flightNumber === flight.flightNumber
+            (flightData) => flightData.flightNumber === updatedFlight.flightNumber
         );
+
         if (flightIndex !== -1) {
-            Object.assign(this.flights[flightIndex], flight);
-            this.updateFlightClasses(flight, this.flights[flightIndex]);
+            Object.assign(this.flights[flightIndex], updatedFlight);
+            this.updateFlightClasses(updatedFlight, this.flights[flightIndex]);
         } else {
-            this.flights.push(flight);
+            this.flights.push(updatedFlight);
         }
     }
     updateFlightClasses(newFlight: IFlight, oldFlight: IFlight) {
@@ -65,7 +73,6 @@ class SocketIoStore {
             "statusClass",
             "takeoffTimeClass",
             "landingTimeClass",
-            "takeoffAirportClass",
             "landingAirportClass",
         ];
 
@@ -78,6 +85,18 @@ class SocketIoStore {
     handleFlightUpdate = (data: IFlight) => {
         this.addFlight(data);
     };
+
+    timeDifferenceInMinutes(time1: string, time2: string) {
+        // Parse the time strings into Date objects
+        const date1 = new Date(time1.replace(/-/g, '/'));
+        const date2 = new Date(time2.replace(/-/g, '/'));
+
+        // Calculate the difference in milliseconds
+        const diffInMs = date2.getTime() - date1.getTime();
+
+        // Convert milliseconds to minutes and round down
+        return Math.floor(diffInMs / 1000 / 60);
+    }
 }
 
 const websocketStore = new SocketIoStore();

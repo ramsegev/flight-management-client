@@ -1,23 +1,27 @@
 .flight-row {
   display: flex;
-  &.hangar {
-    background-color: rgba(255, 255, 0, .2);
-  }
-
-  &.airborne {
-    background-color: rgba(0, 255, 0, .2);
-  }
-
-  &.malfunction {
-    background-color: rgba(255, 0, 0, .2);
-    //animation: pulse 3.1415s ease-in-out forwards;
-  }
+  background-color: rgba(0, 255, 0, .2);
   & > .flight-cell {
     position: relative;
+    display: flex;
+    background-color: rgba(0, 0, 0, .4);
     flex: 1;
     padding: 8px;
-    border-bottom: 1px solid #ccc;
+    width: 14.28%;
+    min-height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
     text-align: center;
+    color: #ffffff;
+    overflow-wrap: break-word;
+    align-items: center;
+    justify-content: center;
+  }
+  &.longDelay {
+    background-color: rgba(255, 255, 0, .2);
+  }
+  &.malfunction {
+    background-color: rgba(255, 0, 0, .2);
   }
   & > .flight-details-update {
     animation: flip 1s ease-in-out forwards;
@@ -31,18 +35,7 @@
   100% {
     transform: perspective(400px) rotateX(-360deg);
   }
-}
-
-@keyframes pulse {
   0% {
-    transform: scaleX(1)
-  }
-
-  50% {
-    transform: scale3d(1.05, 1.05, 1.05)
-  }
-
-  to {
-    transform: scaleX(1)
+    transform: perspective(400px) rotateX(-180deg);
   }
 }

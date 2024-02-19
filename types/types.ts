@@ -1,4 +1,4 @@
-export interface IFlight {
+export interface IFlight extends IFlightClass{
     flightNumber: string;
     status: 'hangar' | 'airborne' | 'malfunction';
     takeoffTime: string;
@@ -6,11 +6,13 @@ export interface IFlight {
     takeoffAirport: string;
     landingAirport: string;
 }
-
+interface IFlightClass {
+    flightClass: string;
+    delayHours: number | string;
+}
 export interface IFlightClasses {
     statusClass: string;
     takeoffTimeClass: string;
     landingTimeClass: string;
-    takeoffAirportClass: string;
     landingAirportClass: string;
 }
