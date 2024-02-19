@@ -3,21 +3,9 @@
   flex-direction: column;
   border: 1px solid #ccc;
 }
-
-.flight-row {
-  display: flex;
-}
-
 .flight-header {
   font-weight: bold;
 }
-
-.flight-cell {
-  flex: 1;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-}
-
 .flight-body {
   display: flex;
   flex-direction: column;

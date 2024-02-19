@@ -1,54 +1,48 @@
 .flight-row {
   display: flex;
-}
-.flight-cell {
-  flex: 1;
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-}
+  &.hangar {
+    background-color: rgba(255, 255, 0, .2);
+  }
 
-.flight-details-update {
-  animation: flip 0.8s ease-in-out forwards;
-}
-.hangar {
-  background-color: rgba(255, 255, 0, .5);
-}
-.airborne {
-  background-color:  rgba(0, 255, 0, .51);
-}
-.malfunction {
-  background-color: rgba(255, 0, 0, .5);
+  &.airborne {
+    background-color: rgba(0, 255, 0, .2);
+  }
+
+  &.malfunction {
+    background-color: rgba(255, 0, 0, .2);
+    //animation: pulse 3.1415s ease-in-out forwards;
+  }
+  & > .flight-cell {
+    position: relative;
+    flex: 1;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+  }
+  & > .flight-details-update {
+    animation: flip 1s ease-in-out forwards;
+  }
 }
 
 @keyframes flip {
   0% {
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-    opacity: 0;
-    -webkit-transform: perspective(400px) rotateX(90deg);
-    transform: perspective(400px) rotateX(90deg)
+    transform: perspective(400px) rotateX(-180deg);
+  }
+  100% {
+    transform: perspective(400px) rotateX(-360deg);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scaleX(1)
   }
 
-  40% {
-    -webkit-animation-timing-function: ease-in;
-    animation-timing-function: ease-in;
-    -webkit-transform: perspective(400px) rotateX(-20deg);
-    transform: perspective(400px) rotateX(-20deg)
-  }
-
-  60% {
-    opacity: 1;
-    -webkit-transform: perspective(400px) rotateX(10deg);
-    transform: perspective(400px) rotateX(10deg)
-  }
-
-  80% {
-    -webkit-transform: perspective(400px) rotateX(-5deg);
-    transform: perspective(400px) rotateX(-5deg)
+  50% {
+    transform: scale3d(1.05, 1.05, 1.05)
   }
 
   to {
-    -webkit-transform: perspective(400px);
-    transform: perspective(400px)
+    transform: scaleX(1)
   }
 }
