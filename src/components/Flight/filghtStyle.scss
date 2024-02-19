@@ -1,0 +1,29 @@
+.flight-row {
+  display: flex;
+}
+.flight-cell {
+  flex: 1;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.flight-details-update {
+  animation: flip 0.6s ease-in-out forwards;
+}
+.hangar {
+  background-color: rgba(255, 255, 0, .5);
+}
+.airborne {
+  background-color:  rgba(0, 255, 0, .51);
+}
+.malfunction {
+  background-color: rgba(255, 0, 0, .5);
+}
+@keyframes flip {
+  0% {
+    transform: perspective(400px) rotateX(0deg);
+  }
+  100% {
+    transform: perspective(400px) rotateX(-360deg);
+  }
+}

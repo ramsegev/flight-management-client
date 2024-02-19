@@ -6,3 +6,11 @@ export interface IFlight {
     takeoffAirport: string;
     landingAirport: string;
 }
+
+export interface IFlightClasses {
+    statusClass: string;
+    takeoffTimeClass: string;
+    landingTimeClass: string;
+    takeoffAirportClass: string;
+    landingAirportClass: string;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+
 import Flights from "./pages/Flights";
 
 function App() {
