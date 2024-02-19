@@ -7,7 +7,7 @@ import {IFlight} from "../../../types/types";
 
 const Index: React.FC = (() => {
     const socketStore = useContext(SocketStoreContext);
-    const {flights} = socketStore;
+    const {filteredFlights} = socketStore;
     useEffect(() => {
         !socketStore.isConnected && socketStore.connect();
     }, [socketStore]);
@@ -26,7 +26,7 @@ const Index: React.FC = (() => {
                     <div className="flight-cell">Takeoff Airport</div>
                 </div>
                 <div className="flight-body">
-                    {flights.map((flight: IFlight, index) => (
+                    {filteredFlights.map((flight: IFlight) => (
                         <Flight key={flight.flightNumber} {...flight} />
                     ))}
                 </div>

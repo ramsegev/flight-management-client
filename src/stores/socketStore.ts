@@ -1,10 +1,10 @@
-import { createContext } from "react";
+import {createContext} from "react";
 import socketIOClient from "socket.io-client";
-import { action, makeAutoObservable, observable } from "mobx";
+import {action, computed, makeAutoObservable, observable} from "mobx";
 import {IFlight, IFlightClasses} from "../../types/types";
 
 class SocketIoStore {
-    io = socketIOClient("http://localhost:4963/", {
+    ws = socketIOClient("http://localhost:4963/", {
         transports: ["websocket"],
     });
     @observable flights: IFlight[] = [];
@@ -15,19 +15,40 @@ class SocketIoStore {
         takeoffAirportClass: "",
         landingAirportClass: "",
     };
-    @observable isConnected = false;
+    @observable isConnected: boolean = false;
+    searchQuery: string = "";
 
     constructor() {
         makeAutoObservable(this);
-        this.connect();
-    }
-
-    connect() {
-        this.io.on("flight-update", this.handleFlightUpdate);
-        this.io.on("connected", this.handleConnected);
     }
 
     @action
+    connect() {
+        this.ws.on("flight-update", this.handleFlightUpdate);
+        this.ws.on("connected", this.setConnected);
+    }
+    @action
+    disconnect() {
+        this.ws.disconnect();
+        this.isConnected = false;
+        console.log("Connection closed");
+    }
+    @action
+    setSearchQuery(query: string = "") {
+        this.searchQuery = query;
+    }
+    @computed
+    get filteredFlights() {
+        const query = this.searchQuery.toLowerCase();
+        return this.flights.filter(flight =>
+            flight.flightNumber.toLowerCase().includes(query) ||
+            flight.takeoffAirport.toLowerCase().includes(query) ||
+            flight.landingAirport.toLowerCase().includes(query)
+        );
+    }
+    setConnected = () => {
+        this.isConnected = true;
+    };
     addFlight(flight: IFlight) {
         const flightIndex = this.flights.findIndex(
             (flightData) => flightData.flightNumber === flight.flightNumber
@@ -39,17 +60,6 @@ class SocketIoStore {
             this.flights.push(flight);
         }
     }
-
-    @action
-    handleFlightUpdate = (data: IFlight) => {
-        this.addFlight(data);
-    };
-
-    @action
-    handleConnected = () => {
-        this.isConnected = true;
-    };
-
     updateFlightClasses(newFlight: IFlight, oldFlight: IFlight) {
         const classes: (keyof IFlightClasses)[] = [
             "statusClass",
@@ -65,11 +75,9 @@ class SocketIoStore {
             }
         });
     }
-
-    disconnect() {
-        this.io.disconnect();
-        console.log("Connection closed");
-    }
+    handleFlightUpdate = (data: IFlight) => {
+        this.addFlight(data);
+    };
 }
 
 const websocketStore = new SocketIoStore();
