@@ -1,41 +1,53 @@
 .flight-row {
   display: flex;
-  background-color: rgba(0, 255, 0, .2);
+  color: #ffffff;
+  perspective: 1000px;
   & > .flight-cell {
     position: relative;
     display: flex;
-    background-color: rgba(0, 0, 0, .4);
     flex: 1;
-    padding: 8px;
-    width: 14.28%;
+    //width: 14.28%;
+    width: auto;
     min-height: 50px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    text-align: center;
-    color: #ffffff;
     overflow-wrap: break-word;
     align-items: center;
     justify-content: center;
+    padding:16px;
+    border-style: solid;
+    border-image: linear-gradient(55deg, #343434, #525252 47%, #343434 99%) 100% 1%;
+    transform-style: preserve-3d
   }
   &.longDelay {
-    background-color: rgba(255, 255, 0, .2);
+    //background-color: rgba(255, 255, 0, .5);
+    color: rgba(255, 255, 0, .5);
   }
   &.malfunction {
-    background-color: rgba(255, 0, 0, .2);
+    color: red;
   }
   & > .flight-details-update {
-    animation: flip 1s ease-in-out forwards;
+    animation: flip .3s ease-in forwards;
   }
 }
 
 @keyframes flip {
   0% {
-    transform: perspective(400px) rotateX(-180deg);
+    transform: rotateX(-180deg);
   }
   100% {
-    transform: perspective(400px) rotateX(-360deg);
+    transform: rotateX(-360deg);
   }
   0% {
-    transform: perspective(400px) rotateX(-180deg);
+    transform:  rotateX(-180deg);
   }
 }
+/*@keyframes flip {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+  0% {
+    opacity: 0;
+  }
+}*/
