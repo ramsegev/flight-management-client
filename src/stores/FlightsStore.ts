@@ -54,7 +54,6 @@ class FlightsStore {
             return Math.ceil((date2.getTime() - date1.getTime()) / (1000 * 60));
         });
     }
-
     addFlight(flight: IFlight) {
         const oldFlightIndex = this.flights.findIndex(f => f.flightNumber === flight.flightNumber);
         const isUpdate = oldFlightIndex !== -1;
