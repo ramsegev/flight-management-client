@@ -20,5 +20,4 @@ const FlightsMonitor: FC = () => {
         </main>
     </div>;
 };
-
 export default FlightsMonitor;

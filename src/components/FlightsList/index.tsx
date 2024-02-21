@@ -42,7 +42,4 @@ const FlightsList: FC = () => {
         </div>
     </div>;
 };
-
 export default observer(FlightsList);
-
-

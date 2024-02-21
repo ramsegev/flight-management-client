@@ -55,5 +55,4 @@ const Flight: FC<IFlight> = ({
         {renderChangedFields(["flightNumber", "status", "takeoffTime", "landingTime", "takeoffAirport", "landingAirport", "delayHours"])}
     </div>;
 };
-
 export default observer(Flight);
