@@ -1,14 +1,16 @@
-.flightsMonitor{
+.flightsMonitor {
   padding: 32px;
   overflow: hidden;
+
   & .header-wrapper {
-  display: flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    & h1{
+
+    & h1 {
       color: yellow;
       text-align: center;
       font-size: 3rem;
-    };
+    }
   }
 }
